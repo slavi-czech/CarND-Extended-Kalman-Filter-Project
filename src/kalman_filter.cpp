@@ -59,7 +59,42 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
    * TODO: update the state by using Extended Kalman Filter equations
    */
+    float px = x_(0);
+    float py = x_(1);
+    float vx = x_(2);
+    float vy = x_(3);
 
+    //calculate readings from polar to cartesian
+    float rho = sqrt((px * px) + (py * py));
+    float phi = atan2(py, px);
+    float rho_dot;
+
+    // check if rho is zero
+    if (fabs(rho) < 0.0001)
+    {
+        rho_dot = 0.0;
+    }
+    else
+    {
+        rho_dot = (px *vx + py * vy) / (sqrt((px * px) + (py * py)));
+    }
+
+    VectorXd z_pred(3);
+    z_pred << rho,
+              phi,
+              rho_dot;
+  
+    VectorXd y = z - z_pred;
+
+    if (y(1) < -M_PI) // y(1) refers to phi
+    {
+      y(1) += 2 * M_PI;
+    }
+    
+    else if (y(1) > M_PI)
+    {
+      y(1) -= 2 * M_PI;
+    }
 
   VectorXd z_pred = H_* x_;
   VectorXd y = z - z_pred;
