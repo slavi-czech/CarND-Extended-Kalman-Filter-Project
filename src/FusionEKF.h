@@ -15,7 +15,10 @@ class FusionEKF {
    * Constructor.
    */
   FusionEKF();
-
+  private:
+  //acceleration noise components
+  float noise_ax;
+  float noise_ay;
   /**
    * Destructor.
    */
