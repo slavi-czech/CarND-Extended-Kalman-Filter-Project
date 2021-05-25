@@ -70,14 +70,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     float rho_dot;
 
     // check if rho is zero
-    if (fabs(rho) < 0.0001)
-    {
-        rho_dot = 0.0;
-    }
-    else
-    {
-        rho_dot = (px *vx + py * vy) / (sqrt((px * px) + (py * py)));
-    }
+    //if (fabs(rho) < 0.0001)
+    //{
+    //    rho_dot = 0.0;
+    //}
+    //else
+    //{
+    //    rho_dot = (px *vx + py * vy) / (sqrt((px * px) + (py * py)));
+    //}
 
     VectorXd z_pred(3);
     z_pred << rho,

@@ -105,7 +105,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     // done initializing, no need to predict or update
     is_initialized_ = true;
-    cout << "Initializing Done!" << endl;
     return;
   }
 
