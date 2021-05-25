@@ -6,7 +6,7 @@ using Eigen::VectorXd;
 
 /* 
  * Please note that the Eigen library does not initialize 
- *   VectorXd or MatrixXd objects with zeros upon creation.
+ * VectorXd or MatrixXd objects with zeros upon creation.
  */
 
 KalmanFilter::KalmanFilter() {}
@@ -69,7 +69,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     float phi = atan2(py, px);
     float rho_dot;
 
-    // check if rho is zero
+    // check if is zero
     if (fabs(rho) < 0.0001)
     {
         rho_dot = 0.0;
@@ -86,18 +86,18 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   
     VectorXd y = z - z_pred;
 
-    //if (y(1) < -M_PI) // y(1) refers to phi
-    //{
-    //  y(1) += 2 * M_PI;
-    //}
-    
-    //else if (y(1) > M_PI)
-    //{
-    //  y(1) -= 2 * M_PI;
-    //}
+    // HINT: when working in radians, you can add 2π or subtract 2π
+    // until the angle is within the desired range.
 
-  //VectorXd z_pred = H_* x_;
-  //VectorXd y = z - z_pred;
+    if (y(1) < -M_PI) 
+    {
+      y(1) += 2 * M_PI; //add 2π
+    }
+    else if (y(1) > M_PI)
+    {
+      y(1) -= 2 * M_PI; //substract 2π
+    }
+
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
   MatrixXd Si = S.inverse();
